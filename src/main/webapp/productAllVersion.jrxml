@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e10b30b9-6c9f-418e-b345-91424932e8a5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="ids" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     PRODUTO.`ID` AS PRODUTO_ID,
+     PRODUTO.`DESCRICAO` AS PRODUTO_DESCRICAO,
+     PRODUTO.`VALOR_LICENCA` AS PRODUTO_VALOR_LICENCA,
+     PRODUTO.`VALOR_MANUTENCAO` AS PRODUTO_VALOR_MANUTENCAO,
+     PRODUTO.`VALOR_IMPLANTACAO` AS PRODUTO_VALOR_IMPLANTACAO,
+     PRODUTO.`APLICACAO` AS PRODUTO_APLICACAO,
+     VERSIONAMENTO.`ID` AS VERSIONAMENTO_ID,
+     VERSIONAMENTO.`ID_PRODUTO` AS VERSIONAMENTO_ID_PRODUTO,
+     VERSIONAMENTO.`DATA` AS VERSIONAMENTO_DATA,
+     VERSIONAMENTO.`VERSAO` AS VERSIONAMENTO_VERSAO,
+     MODULO.`ID` AS MODULO_ID,
+     MODULO.`ID_PRODUTO` AS MODULO_ID_PRODUTO,
+     MODULO.`DESCRICAO` AS MODULO_DESCRICAO,
+     ALTERACAO_MODULO.`ID` AS ALTERACAO_MODULO_ID,
+     ALTERACAO_MODULO.`ID_MODULO` AS ALTERACAO_MODULO_ID_MODULO,
+     ALTERACAO_MODULO.`ID_VERSIONAMENTO` AS ALTERACAO_MODULO_ID_VERSIONAMENTO,
+     ALTERACAO_MODULO.`DESCRICAO` AS ALTERACAO_MODULO_DESCRICAO,
+     ALTERACAO_MODULO.`DATA` AS ALTERACAO_MODULO_DATA
+FROM
+     `PRODUTO` PRODUTO INNER JOIN `VERSIONAMENTO` VERSIONAMENTO ON PRODUTO.`ID` = VERSIONAMENTO.`ID_PRODUTO`
+     INNER JOIN `MODULO` MODULO ON PRODUTO.`ID` = MODULO.`ID_PRODUTO`
+     INNER JOIN `ALTERACAO_MODULO` ALTERACAO_MODULO ON MODULO.`ID` = ALTERACAO_MODULO.`ID_MODULO`
+     AND VERSIONAMENTO.`ID` = ALTERACAO_MODULO.`ID_VERSIONAMENTO`
+WHERE
+PRODUTO.`ID`=$P{ids}]]>
+	</queryString>
+	<field name="PRODUTO_ID" class="java.lang.Integer"/>
+	<field name="PRODUTO_DESCRICAO" class="java.lang.String"/>
+	<field name="PRODUTO_VALOR_LICENCA" class="java.math.BigDecimal"/>
+	<field name="PRODUTO_VALOR_MANUTENCAO" class="java.math.BigDecimal"/>
+	<field name="PRODUTO_VALOR_IMPLANTACAO" class="java.math.BigDecimal"/>
+	<field name="PRODUTO_APLICACAO" class="java.lang.String"/>
+	<field name="VERSIONAMENTO_ID" class="java.lang.Integer"/>
+	<field name="VERSIONAMENTO_ID_PRODUTO" class="java.lang.Integer"/>
+	<field name="VERSIONAMENTO_DATA" class="java.sql.Timestamp"/>
+	<field name="VERSIONAMENTO_VERSAO" class="java.lang.String"/>
+	<field name="MODULO_ID" class="java.lang.Integer"/>
+	<field name="MODULO_ID_PRODUTO" class="java.lang.Integer"/>
+	<field name="MODULO_DESCRICAO" class="java.lang.String"/>
+	<field name="ALTERACAO_MODULO_ID" class="java.lang.Integer"/>
+	<field name="ALTERACAO_MODULO_ID_MODULO" class="java.lang.Integer"/>
+	<field name="ALTERACAO_MODULO_ID_VERSIONAMENTO" class="java.lang.Integer"/>
+	<field name="ALTERACAO_MODULO_DESCRICAO" class="java.lang.String"/>
+	<field name="ALTERACAO_MODULO_DATA" class="java.sql.Timestamp"/>
+	<group name="id">
+		<groupExpression><![CDATA[$F{PRODUTO_ID}]]></groupExpression>
+	</group>
+	<group name="versao">
+		<groupExpression><![CDATA[$F{VERSIONAMENTO_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="66">
+				<staticText>
+					<reportElement style="Column header" x="476" y="14" width="160" height="15" forecolor="#FFFFFF" uuid="9b451ba3-df3e-4ec3-823e-912cd81e58de"/>
+					<text><![CDATA[Data]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="-3" y="11" width="811" height="20" backcolor="#006666" uuid="e298a03e-979b-4d67-8002-092ff8f7aed2"/>
+				</rectangle>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="270" y="36" width="160" height="15" uuid="79ae712d-f4a4-4c1a-9aec-a59326a2b010"/>
+					<textFieldExpression><![CDATA[$F{VERSIONAMENTO_VERSAO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="63" y="36" width="160" height="15" uuid="9f835e2e-912a-4970-8b4d-6f914bf661bc"/>
+					<textFieldExpression><![CDATA[$F{PRODUTO_DESCRICAO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="50" y="14" width="160" height="15" forecolor="#FFFFFF" uuid="33b8df6b-1c19-4e2e-9ff6-dd577b0c367f"/>
+					<text><![CDATA[Produto]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="486" y="36" width="160" height="15" uuid="91d9c64f-be6a-46a8-bc72-6ae9293ac6d9"/>
+					<textFieldExpression><![CDATA[$F{VERSIONAMENTO_DATA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="257" y="14" width="160" height="15" forecolor="#FFFFFF" uuid="5ba22adc-edbd-4439-b724-3c2228e4722d"/>
+					<text><![CDATA[Versão]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="476" y="14" width="160" height="15" forecolor="#FFFFFF" uuid="2d612d26-77e9-42e3-9c9a-a33c8796b181"/>
+					<text><![CDATA[Data]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<image>
+				<reportElement x="63" y="13" width="164" height="50" uuid="057cb001-d531-419b-b376-41c98803825a"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="352" y="1" width="263" height="62" uuid="af8d5cbb-8d52-4390-b850-71cb4a5024f4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="40" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="385" y="63" width="196" height="22" forecolor="#009999" uuid="c6628243-dc45-48c3-bb72-eef293b60a5c"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Historico de Alterações]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="77" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="63" y="36" width="160" height="15" uuid="3c904e69-4e9d-490e-a652-465431be41b4"/>
+				<textFieldExpression><![CDATA[$F{MODULO_DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement style="Detail" x="270" y="36" width="515" height="15" uuid="4b9b7f77-f515-426c-aeb2-23616b7da5ee"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{ALTERACAO_MODULO_DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="50" y="21" width="160" height="15" forecolor="#009999" uuid="cd36eeb5-a111-4735-a288-67c2bd5b1831"/>
+				<text><![CDATA[Modulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="257" y="21" width="545" height="15" forecolor="#009999" uuid="aa8710e4-9783-42e2-91cc-0939f8eca2b6"/>
+				<text><![CDATA[Descricao]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-4" y="0" width="811" height="3" backcolor="#006666" uuid="486027f7-24ea-4977-a928-e5dcccb7c675"/>
+			</rectangle>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-13" y="0" width="824" height="24" forecolor="#014646" backcolor="#006666" uuid="39f00f94-af66-4df7-92dc-7f69a7a211b3"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="763" y="1" width="40" height="20" forecolor="#FFFFFF" uuid="a7788a18-5422-4b4f-b83b-fe443d2616a9"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="683" y="1" width="80" height="20" forecolor="#FFFFFF" uuid="4b007fc3-1b10-417a-98ae-2d7d38a3f274"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="b3bd2dc6-db15-41a0-93f4-388d5ee7041b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

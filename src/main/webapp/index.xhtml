@@ -11,6 +11,8 @@
         <title>Enter Product Mapping</title>
     </h:head>
     <h:body>
+        
+        <p:media value="/report.pdf?id=20" player="pdf" width="100%" height="100%"/>
         <h:outputScript name="js/jquery-ui-1.10.4.min.js"/>
         <h:form>
             <h:commandButton value="Ver relatorio" actionListener="#{relatorioBean.gerarRelatorio()}" onclick="this.form.target = '_blank'" />
